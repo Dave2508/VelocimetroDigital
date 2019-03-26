@@ -1,0 +1,48 @@
+import UIKit
+
+enum Velocidades : Int{
+    case Apagado = 0
+    case VelocidadBaja = 20
+    case VelocidadMedia = 50
+    case VelocidadAlta = 120
+    
+    init(velocidadInicial : Velocidades){
+        self = velocidadInicial
+    }
+}
+
+class Auto{
+    var velocidad : Velocidades
+    
+    init(velocidadInicial : Velocidades){
+        velocidad = Velocidades(velocidadInicial : velocidadInicial)
+    }
+    
+    func cambioDeVelocidad() -> ( actual : Int, velocidadEnCadena: String) {
+        
+        let velocidadActual = velocidad                             //Asignamos el valor de nuestra velocidad actual
+        
+        // Switcheo de velocidades
+        switch velocidad {
+        case .Apagado:
+            velocidad = Velocidades.VelocidadBaja
+        case .VelocidadBaja:
+            velocidad = Velocidades.VelocidadMedia
+        case .VelocidadMedia:
+            velocidad = Velocidades.VelocidadAlta
+        case .VelocidadAlta:
+            velocidad = Velocidades.VelocidadMedia
+        }
+        
+        // regresamos la tupla  con los valores previamente definidos y deseados
+        return (velocidadActual.rawValue, "\(velocidadActual)")
+    }
+}
+
+// Creamos el objeto miCoche y lo inicializamos en Apagado
+var miCoche = Auto(velocidadInicial: Velocidades.Apagado)
+
+for _ in 1...20{
+    let speed = miCoche.cambioDeVelocidad()
+    print("\(speed.0), \(speed.1)")
+}
